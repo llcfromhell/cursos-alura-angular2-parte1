@@ -8,9 +8,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+//import {Component, Inject} from "@angular/core"
 var core_1 = require("@angular/core");
+var http_1 = require("@angular/http");
 var AppComponent = (function () {
-    function AppComponent() {
+    //constructor(@Inject(Http) http) {
+    function AppComponent(http) {
+        /* let stream = http.get('v1/fotos')
+        
+        stream.subscribe(res => {
+            this.fotos = res.json()
+            console.log(this.fotos)
+        }) */
+        var _this = this;
+        this.fotos = [];
+        http
+            .get('v1/fotos')
+            .map(function (res) { return res.json(); })
+            .subscribe(function (fotos) { return _this.fotos = fotos; }, function (erro) { return console.log(erro); });
     }
     AppComponent = __decorate([
         core_1.Component({
@@ -18,7 +33,7 @@ var AppComponent = (function () {
             templateUrl: "./app.component.html",
             selector: "app"
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [http_1.Http])
     ], AppComponent);
     return AppComponent;
 }());
